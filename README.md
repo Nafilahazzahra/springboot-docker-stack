@@ -25,6 +25,7 @@ Kibana + Logstash untuk pencatatan terpusat dan analisis.
 
 Elasticsearch untuk menyimpan dan melakukan query log.
 
+
 🛠️ Teknologi yang Digunakan:
 Spring Boot untuk membangun microservices berbasis RESTful.
 
