@@ -1,0 +1,136 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./elk/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - app-network
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.1
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - app-network
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./elk/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - app-network
+    depends_on:
+      - elasticsearch
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - app-network
+
+  eureka-server:
+    build: ./eurekaserver
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "7000:7000"
+    networks:
+      - app-network
+    depends_on:
+      - eureka-server
+
+  book-service:
+    build: ./book-service
+    ports:
+      - "7001:7001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash:5000
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+      - eureka-server
+      - logstash
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "7002:7002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash:5000
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+      - eureka-server
+      - logstash
+
+  loan-service:
+    build: ./loan-service
+    ports:
+      - "7003:7003"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGSTASH_HOST=logstash:5000
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+      - eureka-server
+      - logstash
+
+networks:
+  app-network:
+    driver: bridge
