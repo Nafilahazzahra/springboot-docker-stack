@@ -17,8 +17,11 @@ User Service: Mengelola pengguna dan data terkait pengguna.
 
 🚀 Fitur:
 Semua layanan dikontainerisasi menggunakan Docker untuk penerapan yang mulus.
+
 Prometheus untuk pemantauan layanan secara real-time.
+
 Kibana + Logstash untuk pencatatan terpusat dan analisis.
+
 Elasticsearch untuk menyimpan dan melakukan query log.
 
 🛠️ Teknologi yang Digunakan:
