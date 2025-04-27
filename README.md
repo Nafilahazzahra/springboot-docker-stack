@@ -6,9 +6,13 @@ uts-microservice-university
 Selamat datang di Arsitektur Microservices yang dibangun menggunakan Spring Boot, Docker, dan sepenuhnya dimonitor menggunakan Prometheus, Kibana, Logstash, serta Elasticsearch. Proyek ini terdiri dari layanan-layanan berikut:
 
 Loan Service: Mengelola operasi terkait pinjaman.
+
 Book Service: Menangani data buku dan operasi CRUD.
+
 Eureka Server: Registri layanan untuk microservices.
+
 API Gateway: Bertindak sebagai gateway untuk merutekan dan mengagregasi permintaan ke berbagai layanan.
+
 User Service: Mengelola pengguna dan data terkait pengguna.
 
 🚀 Fitur:
