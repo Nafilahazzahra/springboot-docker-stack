@@ -16,6 +16,7 @@ API Gateway: Bertindak sebagai gateway untuk merutekan dan mengagregasi perminta
 User Service: Mengelola pengguna dan data terkait pengguna.
 
 🚀 Fitur:
+
 Semua layanan dikontainerisasi menggunakan Docker untuk penerapan yang mulus.
 
 Prometheus untuk pemantauan layanan secara real-time.
@@ -26,9 +27,13 @@ Elasticsearch untuk menyimpan dan melakukan query log.
 
 🛠️ Teknologi yang Digunakan:
 Spring Boot untuk membangun microservices berbasis RESTful.
+
 Docker untuk membuat lingkungan yang dapat direproduksi dan mengkontainerisasi semua layanan.
+
 Prometheus untuk pengambilan dan pemantauan metrik dari semua layanan.
+
 Kibana untuk visualisasi log dan metrik.
+
 Elasticsearch & Logstash untuk manajemen dan pencarian log.
 
-Link Video : 
+Link Video Dokumentasi : 
