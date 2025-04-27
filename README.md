@@ -37,4 +37,4 @@ Kibana untuk visualisasi log dan metrik.
 
 Elasticsearch & Logstash untuk manajemen dan pencarian log.
 
-Link Video Dokumentasi : 
+Link Video Dokumentasi : https://drive.google.com/file/d/15T-86HN4jlCS17If_HpAYnA1PToXTbCn/view?usp=sharing
